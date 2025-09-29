@@ -4,7 +4,11 @@
   "license": "MIT",
   "scripts": {
     "dev-backend": "nx run-many --target=serve --projects=posts,users,feed --parallel",
-    "dev-frontend": "nx serve ui"
+    "dev-frontend": "nx serve ui",
+    "docker:build:users": "docker build -f ./apps/users/Dockerfile . -t users",
+    "docker:build:posts": "docker build -f ./apps/posts/Dockerfile . -t posts",
+    "docker:build:feed": "docker build -f ./apps/feed/Dockerfile . -t feed",
+    "docker:build:ui": "docker build -f ./apps/ui/Dockerfile . -t ui"
   },
   "private": true,
   "dependencies": {
