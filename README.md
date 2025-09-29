@@ -64,3 +64,6 @@ Nx comes with local caching already built-in (check your `nx.json`). On CI you m
 
 TEST Christian
 noch ein test 1
+npx prisma migrate reset --schema=apps/posts/prisma/schema.prisma --force
+npx prisma migrate reset --schema=apps/users/prisma/schema.prisma --force
+npx prisma migrate reset --schema=apps/feed/prisma/schema.prisma --force
