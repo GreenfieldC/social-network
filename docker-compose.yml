@@ -1,0 +1,81 @@
+services:
+  # Users Service
+  users:
+    build:
+      context: .
+      dockerfile: ./apps/users/Dockerfile
+    ports:
+      - "3333:3333"
+    environment:
+      - PORT=3333
+      - DATABASE_URL=file:./prisma/dev.db
+    volumes:
+      - ./apps/users/prisma:/app/prisma
+    networks:
+      - social-network
+    restart: unless-stopped
+
+  # Posts Service
+  posts:
+    build:
+      context: .
+      dockerfile: ./apps/posts/Dockerfile
+    ports:
+      - "3334:3334"
+    environment:
+      - PORT=3334
+      - DATABASE_URL=file:./prisma/dev.db
+    volumes:
+      - ./apps/posts/prisma:/app/prisma
+    networks:
+      - social-network
+    restart: unless-stopped
+
+  # Feed Service
+  feed:
+    build:
+      context: .
+      dockerfile: ./apps/feed/Dockerfile
+    ports:
+      - "3335:3335"
+    environment:
+      - PORT=3335
+      - DATABASE_URL=file:./prisma/dev.db
+      - USERS_SERVICE_URL=http://users:3333
+      - POSTS_SERVICE_URL=http://posts:3334
+    volumes:
+      - ./apps/feed/prisma:/app/prisma
+    networks:
+      - social-network
+    depends_on:
+      - users
+      - posts
+    restart: unless-stopped
+
+  # UI Service (Frontend)
+  ui:
+    build:
+      context: .
+      dockerfile: ./apps/ui/Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - REACT_APP_USERS_API=http://localhost:3333
+      - REACT_APP_POSTS_API=http://localhost:3334
+      - REACT_APP_FEED_API=http://localhost:3335
+    networks:
+      - social-network
+    depends_on:
+      - users
+      - posts
+      - feed
+    restart: unless-stopped
+
+networks:
+  social-network:
+    driver: bridge
+
+volumes:
+  users_data:
+  posts_data:
+  feed_data:
