@@ -3,6 +3,8 @@ name: CI
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
@@ -14,12 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'        # optional: npm-Cache
-
+          cache: 'npm'
       - run: npm ci
-
-      - name: Build
-        run: npx nx build social-network
-
-      - name: Test
-        run: npx nx test social-network
+      - run: npx nx run-many --target=build --projects=users,posts,feed,ui --parallel
+      - run: npx nx run-many --target=test --projects=users,posts,feed,ui --parallel
