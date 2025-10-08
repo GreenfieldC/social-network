@@ -1,4 +1,4 @@
-name: <abbr title="Continuous Integration">CI</abbr>
+name: CI
 
 on:
   push:
@@ -9,10 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'        # optional: npm-Cache
+
       - run: npm ci
-      - run: nx build social-network
-      - run: nx test social-network
+
+      - name: Build
+        run: npx nx build social-network
+
+      - name: Test
+        run: npx nx test social-network
