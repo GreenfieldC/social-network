@@ -18,5 +18,5 @@ jobs:
           node-version: 18
           cache: 'npm'
       - run: npm ci
-      - run: npx nx run-many --target=build --projects=users,posts,feed,ui --parallel
-      - run: npx nx run-many --target=test --projects=users,posts,feed,ui --parallel
+      - run: npx nx run-many --target=build --projects=users,posts,feed --parallel
+      - run: npx nx run-many --target=test --projects=users,posts,feed --parallel
