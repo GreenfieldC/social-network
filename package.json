@@ -4,7 +4,12 @@
   "license": "MIT",
   "scripts": {
     "dev-backend": "nx run-many --target=serve --projects=posts,users,feed --parallel",
-    "dev-frontend": "nx serve ui"
+    "dev-frontend": "nx serve ui",
+    "db:generate": "nx run-many --target=prisma-generate --projects=posts,users,feed --parallel",
+    "db:push": "nx run-many --target=prisma-push --projects=posts,users,feed --parallel",
+    "db:migrate": "nx run-many --target=prisma-migrate --projects=posts,users,feed --parallel",
+    "db:reset": "nx run-many --target=prisma-reset --projects=posts,users,feed --parallel",
+    "db:seed": "nx run-many --target=prisma-seed --projects=posts,users,feed --parallel"
   },
   "private": true,
   "dependencies": {
@@ -12,6 +17,7 @@
     "axios": "^1.0.0",
     "body-parser": "^1.20.2",
     "express": "~4.18.1",
+    "pg": "^8.11.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tslib": "^2.3.0"
@@ -36,6 +42,7 @@
     "@types/express": "~4.17.13",
     "@types/jest": "^29.4.0",
     "@types/node": "18.16.9",
+    "@types/pg": "^8.10.0",
     "@types/react": "18.2.33",
     "@types/react-dom": "18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.9.1",

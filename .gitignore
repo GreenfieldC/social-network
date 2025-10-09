@@ -39,3 +39,14 @@ testem.log
 Thumbs.db
 
 .nx/cache
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Database files
+*.db
+*.sql
+*.sqlite
+prisma/db.sql*

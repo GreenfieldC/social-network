@@ -1,13 +1,19 @@
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./db.sql"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id       Int      @id @default(autoincrement())
-  // Add other fields for the user model here (e.g., name, email)
+  email    String   @unique
+  name     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relationen zu anderen Services (falls benötigt)
+  posts    Post[]
 }
